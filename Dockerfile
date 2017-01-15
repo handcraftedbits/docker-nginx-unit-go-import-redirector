@@ -1,10 +1,10 @@
-FROM handcraftedbits/nginx-unit:1.0.0
+FROM handcraftedbits/nginx-unit:1.0.1
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
 COPY data /
 
 RUN apk update && \
-  apk add bash git go && \
+  apk add bash git go libc-dev && \
 
   mkdir -p /opt/go-import-redirector && \
   cd /opt && \
@@ -12,7 +12,7 @@ RUN apk update && \
   mv gopath/bin/go-import-redirector go-import-redirector/go-import-redirector && \
   rm -rf gopath && \
 
-  apk del git go
+  apk del git go libc-dev
 
 EXPOSE 80
 
