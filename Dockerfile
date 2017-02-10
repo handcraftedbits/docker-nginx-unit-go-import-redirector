@@ -8,6 +8,7 @@ RUN apk update && \
 
   mkdir -p /opt/go-import-redirector && \
   cd /opt && \
+  git config --global http.https://gopkg.in.followRedirects true && \
   GOPATH=/opt/gopath go get rsc.io/go-import-redirector && \
   mv gopath/bin/go-import-redirector go-import-redirector/go-import-redirector && \
   rm -rf gopath && \
