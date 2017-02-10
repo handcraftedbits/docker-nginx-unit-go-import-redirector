@@ -14,8 +14,6 @@ then
      REDIRECTOR_VCS="-vcs ${REDIRECTOR_VCS}"
 fi
 
-notifyUnitLaunched
-
 copyUnitConf nginx-unit-go-import-redirector > /dev/null
 
 notifyUnitStarted
@@ -24,4 +22,4 @@ logUrlPrefix "go-import-redirector"
 
 # Start go-import-redirector.
 
-/opt/go-import-redirector/go-import-redirector -addr :80 ${REDIRECTOR_VCS} ${REDIRECTOR_IMPORT} ${REDIRECTOR_REPO}
+exec /opt/go-import-redirector/go-import-redirector -addr :80 ${REDIRECTOR_VCS} ${REDIRECTOR_IMPORT} ${REDIRECTOR_REPO}

@@ -1,4 +1,4 @@
-FROM handcraftedbits/nginx-unit:1.0.1
+FROM handcraftedbits/nginx-unit:1.1.0
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
 COPY data /
@@ -16,4 +16,4 @@ RUN apk update && \
 
 EXPOSE 80
 
-CMD ["/bin/bash", "/opt/container/script/run-go-import-redirector.sh"]
+CMD [ "/bin/bash", "/opt/container/script/run-go-import-redirector.sh" ]
