@@ -1,4 +1,4 @@
-FROM handcraftedbits/nginx-unit:1.1.0
+FROM handcraftedbits/nginx-unit:1.1.2
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
 COPY data /

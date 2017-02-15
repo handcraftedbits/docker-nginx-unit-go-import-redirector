@@ -26,8 +26,8 @@ redirector:
     - NGINX_URL_PREFIX=/go
     - REDIRECTOR_IMPORT=mysite.com/go/*
     - REDIRECTOR_REPO=https://github.com/mysite/*
-  volumes_from:
-    - data
+  volumes:
+    - data:/opt/container/shared
 ```
 
 Observe the following:
@@ -35,8 +35,7 @@ Observe the following:
 * Several environment variables are used to configure go-import-redirector.  See the
   [environment variable reference](#reference) and
   [go-import-redirector documentation](https://godoc.org/rsc.io/go-import-redirector) for additional information.
-* As with any other NGINX Host unit, we mount the volumes from our
-  [NGINX Host data container](https://github.com/handcraftedbits/docker-nginx-host-data), in this case named `data`.
+* As with any other NGINX Host unit, we mount our data volume, in this case named `data`, to `/opt/container/shared`.
 
 Finally, we need to create a link in our NGINX Host container to the `redirector` container in order to host
 go-import-redirector.  Here is our final `docker-compose.yml` file:
@@ -44,22 +43,20 @@ go-import-redirector.  Here is our final `docker-compose.yml` file:
 ```yaml
 version: "3"
 
-services:
+volumes:
   data:
-    image: handcraftedbits/nginx-host-data
 
+services:
   proxy:
     image: handcraftedbits/nginx-host
-    depends_on:
-      redirector:
-        condition: service_healthy
+    links:
+      - redirector
     ports:
       - "443:443"
     volumes:
+      - data:/opt/container/shared
       - /etc/letsencrypt:/etc/letsencrypt
       - /home/me/dhparam.pem:/etc/ssl/dhparam.pem
-    volumes_from:
-      - data
 
   redirector:
     image: handcraftedbits/nginx-unit-go-import-redirector
@@ -68,8 +65,8 @@ services:
       - NGINX_URL_PREFIX=/go
       - REDIRECTOR_IMPORT=mysite.com/go/*
       - REDIRECTOR_REPO=https://github.com/mysite/*
-    volumes_from:
-      - data
+    volumes:
+      - data:/opt/container/shared
 ```
 
 This will result in making go-import-redirector available at `https://mysite.com/go/*`.
