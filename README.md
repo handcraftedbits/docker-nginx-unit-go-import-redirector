@@ -41,7 +41,7 @@ Finally, we need to create a link in our NGINX Host container to the `redirector
 go-import-redirector.  Here is our final `docker-compose.yml` file:
 
 ```yaml
-version: "3"
+version: "2.1"
 
 volumes:
   data:
