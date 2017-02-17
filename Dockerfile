@@ -1,10 +1,10 @@
-FROM handcraftedbits/nginx-unit:1.1.2
+FROM handcraftedbits/nginx-unit:1.1.3
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
 COPY data /
 
 RUN apk update && \
-  apk add bash git go libc-dev && \
+  apk add git go libc-dev && \
 
   mkdir -p /opt/go-import-redirector && \
   cd /opt && \
